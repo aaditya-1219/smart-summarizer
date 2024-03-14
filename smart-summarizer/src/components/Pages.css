@@ -1,0 +1,100 @@
+:root {
+    --input-bg: #BABABA;
+}
+
+.url-container {
+    padding: 50px;
+    padding-top: 80px;
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 15px;
+}
+
+.url-question {
+    display: flex;
+    flex-direction: column;
+    width: 30vw;
+    gap: 10px;
+} 
+
+.url-wrapper {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.pdf-wrapper{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    padding: 3.5rem;
+    width: 100%;
+}
+
+.response-window {
+    text-align: justify;
+    border: 2px solid;
+    padding: 2.5rem;
+}
+
+.pdf-container button {
+    margin-top: 15px;
+}
+
+.pdf-question textarea {
+    width: 30vw;
+} 
+
+.pdf-question {
+    width: 30vw;
+    display: flex;
+    flex-direction: column;
+}
+
+.pdf-answer, .url-answer {
+    border-radius: 8px;
+    border: 1px solid rgba(0,0,0,0.2);
+    padding: 20px;
+}
+
+.pdf-container {
+    width: 100vw;
+    padding: 3.5rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    
+}
+.url-container h1, .pdf-container h1 {
+    position: absolute;
+    top: 0;
+    left: 0;
+    margin-left: 3.5rem;
+    padding: 10px 20px;
+}
+
+input {
+    height: 35px;
+    width: 40vw;
+}
+
+input, textarea {
+    background-color: var(--input-bg);
+    outline: none;
+    border: none;
+    border-radius: 5px;
+    padding: 5px 8px;
+}
+
+
+button {
+    font-size: 1.1rem;
+    border: none;
+    padding: 5px 8px;
+    border-radius: 5px;
+    color: white;
+    background-color: black;
+}

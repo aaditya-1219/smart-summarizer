@@ -1,0 +1,113 @@
+:root {
+    --bg: #ffffff;
+    --box-color: #808080;
+    --grey-text: #D8D9DA;
+}
+
+.box-container {
+    background-color: var(--bg);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100vw;
+    height: 100vh;
+}
+
+.route-box {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: var(--box-color);
+    color: var(--grey-text);
+    font-size: 1.5rem;
+    padding: 20px;
+    margin: 20px;
+    height: 20vw;
+    width: 20vw;
+    border-radius: 24px;
+    box-shadow: 10px 10px 4px 0px rgba(0,0,0,0.1);
+    transition: 0.3s all;
+    position: relative;
+}
+
+.route-box i {
+    transform: scale(1);
+    position: absolute;
+    bottom: 5px;
+    right: 20px;
+}
+.route-box:hover {
+    transform: scale(1.05);
+}
+
+a {
+    text-decoration: none;
+}:root {
+    --bg: #ffffff;
+    --box-color: #808080;
+    --grey-text: #D8D9DA;
+}
+
+.box-container {
+    background-color: var(--bg);
+    display: flex;
+    flex-direction: column;
+    width: fit-content;
+    gap: 20px;
+}
+.box-wrapper {
+    gap: 20px;
+    display: flex;
+    flex-direction: row;
+}
+.home-container h1 {
+    position: absolute;
+    top: 0;
+    left: 0;
+    margin-left: 3.5rem;
+    padding: 10px 20px;
+}
+.home-container {
+    width: 100vw;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 0 40px;
+    margin-left: 3.5rem;
+    height: 100vh;
+}
+.greetings {
+    width: 100%;
+    text-align: left;
+}
+
+.route-box {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: var(--box-color);
+    color: var(--grey-text);
+    font-size: 1.5rem;
+    padding: 20px;
+    height: 20vw;
+    width: 20vw;
+    border-radius: 24px;
+    box-shadow: 10px 10px 4px 0px rgba(0,0,0,0.1);
+    transition: 0.3s all;
+    position: relative;
+}
+
+.route-box i {
+    transform: scale(1);
+    position: absolute;
+    bottom: 5px;
+    right: 20px;
+}
+.route-box:hover {
+    transform: scale(1.05);
+}
+
+a {
+    text-decoration: none;
+}
