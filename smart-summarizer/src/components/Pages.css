@@ -21,6 +21,10 @@
     gap: 10px;
 } 
 
+.url-answer {
+    width: 100%;
+}
+
 .url-wrapper {
     display: flex;
     flex-direction: column;
@@ -33,8 +37,8 @@
 .loading-container {
     background-color: rgba(255,255,255,0.9);
     position: absolute;
+    z-index: 1;
     display: flex;
-    flex-direction: row;
     height: 100vh;
     width: 100vw;
     justify-content: center;

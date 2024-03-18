@@ -2,20 +2,17 @@ from flask import Flask, request, jsonify
 from flask_cors import CORS
 from goose3 import Goose
 from transformers import pipeline 
-
 from PyPDF2 import PdfReader
 from langchain.text_splitter import RecursiveCharacterTextSplitter
 import os
 from langchain_google_genai import GoogleGenerativeAIEmbeddings
 import google.generativeai as genai
 from langchain_community.vectorstores import FAISS
-# from langchain.vectorstores import FAISS
 from langchain_google_genai import ChatGoogleGenerativeAI
 from langchain.chains.question_answering import load_qa_chain
 from langchain.prompts import PromptTemplate
 from dotenv import load_dotenv
-
-
+from transformers import AutoModelForQuestionAnswering, AutoTokenizer
 
 load_dotenv()
 os.getenv("GOOGLE_API_KEY")
@@ -39,6 +36,15 @@ def summarize_text():
     summary = summarizer(input_text, max_length=300, min_length=300, do_sample=False)
     # print(summary[0]['summary_text'])
     goose.close()
+    # pdf_docs =  get_pdf_text('file')
+    text_chunks = get_text_chunks(input_text)
+
+    # Debug information
+    # print("Length of text_chunks:", len(text_chunks))
+    # print("Contents of text_chunks:", text_chunks)
+
+    get_vector_store(text_chunks)
+    # return jsonify({'message': 'Processing completed'})
     return jsonify({'summary': summary[0]['summary_text']}) 
 
 
@@ -112,7 +118,6 @@ def process_pdf():
         print(f"Error in process_pdf: {e}")
         return jsonify({'error': 'Internal Server Error'})
 
-
 @app.route('/chat', methods=['POST'])
 def chat_with_pdf():
     try:
@@ -129,5 +134,3 @@ def chat_with_pdf():
 
 if __name__ == '__main__':
     app.run(debug=True)
-
-
