@@ -1,11 +1,14 @@
 :root {
-    --bg: #ffffff;
+    --grey-bg: #F0ECE5;
     --box-color: #808080;
-    --grey-text: #D8D9DA;
+    --darkblue: #31304D;
+}
+
+body {
+    background-color: var(--grey-bg);
 }
 
 .box-container {
-    background-color: var(--bg);
     display: flex;
     justify-content: center;
     align-items: center;
@@ -17,8 +20,7 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    background-color: var(--box-color);
-    color: var(--grey-text);
+    background-color: var(--darkblue);
     font-size: 1.5rem;
     padding: 20px;
     margin: 20px;
@@ -28,8 +30,8 @@
     box-shadow: 10px 10px 4px 0px rgba(0,0,0,0.1);
     transition: 0.3s all;
     position: relative;
+    color: white;
 }
-
 .route-box i {
     transform: scale(1);
     position: absolute;
@@ -42,12 +44,7 @@
 
 a {
     text-decoration: none;
-}:root {
-    --bg: #ffffff;
-    --box-color: #808080;
-    --grey-text: #D8D9DA;
 }
-
 .box-container {
     background-color: var(--bg);
     display: flex;
@@ -68,13 +65,12 @@ a {
     padding: 10px 20px;
 }
 .home-container {
-    width: 100vw;
+    width: 100%;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
     padding: 0 40px;
-    margin-left: 3.5rem;
     height: 100vh;
 }
 .greetings {
@@ -82,21 +78,6 @@ a {
     text-align: left;
 }
 
-.route-box {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    background-color: var(--box-color);
-    color: var(--grey-text);
-    font-size: 1.5rem;
-    padding: 20px;
-    height: 20vw;
-    width: 20vw;
-    border-radius: 24px;
-    box-shadow: 10px 10px 4px 0px rgba(0,0,0,0.1);
-    transition: 0.3s all;
-    position: relative;
-}
 
 .route-box i {
     transform: scale(1);

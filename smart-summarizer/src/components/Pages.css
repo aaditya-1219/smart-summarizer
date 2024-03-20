@@ -1,6 +1,61 @@
 :root {
     --input-bg: #BABABA;
 }
+#sidebar {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: flex-start;
+    width: 3.5rem;
+    height: 100vh;
+    background-color: var(--darkblue);
+    box-shadow: 0px 2px 13px 5px rgba(0, 0, 0, 0.2); 
+    z-index: 1;
+    position: fixed;
+    padding: 10px 0;
+    transition: 0.4s all ease;
+    overflow: hidden;
+}
+
+.icons {
+    display: flex;
+    flex-direction: column;
+}
+
+i {
+    padding: 10px;
+    margin: 10px;
+    color: white;
+    cursor: pointer;
+    transform: scale(1.5);
+}
+
+.container {
+    transition: all 0.4s ease;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    flex: 1;
+    padding: 50px;
+    height: 100vh; 
+    margin-left: 3.5rem;
+}
+
+.expandSidebar {
+    width: 25vw !important;
+}
+
+.increaseMargin {
+    margin-left: 30vw;
+}
+
+.container h1 {
+    position: absolute;
+    top: 0;
+    left: 0;
+    margin-left: 3.5rem;
+    padding: 10px 20px;
+}
 
 .url-container {
     margin-left: 3.5rem;
@@ -14,26 +69,70 @@
     gap: 15px;
 }
 
-.url-question {
+.displayNone {
+    display: none !important;
+    opacity: 0;
+}
+
+.url-question, .pdf-input{
+    width: 100%;
+    transition: 0.4s ease;
+    margin: 0 10px;
     display: flex;
     flex-direction: column;
-    width: 30vw;
+    width: 20vw;
     gap: 10px;
 } 
 
+.pdf-input {
+    width: 22vw;
+    padding: 20px;
+}
+
+#sidebar button {
+    background-color: rgba(255, 255, 255, 0.46);
+    width: fit-content;
+}
+#sidebar input {
+    width: 100%;
+}
+
+input {
+    width: 40vw;
+    border-radius: 10px;
+}
+
+textarea {
+    /* width: 40vw; */
+    border-radius: 5px;
+}
+
+input, textarea {
+    outline: none;
+    border: none;
+    padding: 5px 8px;
+}
+
+.sendIcon {
+    transform: scale(0.5);
+    height: fit-content;
+}
+.submitBtn {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: white;
+}
 .url-answer {
     width: 100%;
 }
 
-.url-wrapper {
+.input-wrapper {
     display: flex;
-    flex-direction: column;
+    height: 40px;
     gap: 10px;
 }
 
-.submitBtn {
-    cursor: pointer;
-}
 .loading-container {
     background-color: rgba(255,255,255,0.9);
     position: absolute;
@@ -45,7 +144,7 @@
     align-items: center;
 }
 
-.pdf-wrapper{
+.wrapper{
     display: flex;
     flex-direction: row;
     justify-content: space-around;
@@ -95,21 +194,10 @@
     padding: 10px 20px;
 }
 
-input {
-    height: 35px;
-    width: 40vw;
-}
-
-input, textarea {
-    background-color: var(--input-bg);
-    outline: none;
-    border: none;
-    border-radius: 5px;
-    padding: 5px 8px;
-}
 
 
 button {
+    cursor: pointer;
     font-size: 1.1rem;
     border: none;
     padding: 5px 8px;
