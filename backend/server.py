@@ -13,13 +13,60 @@ from langchain.chains.question_answering import load_qa_chain
 from langchain.prompts import PromptTemplate
 from dotenv import load_dotenv
 from transformers import AutoModelForQuestionAnswering, AutoTokenizer
-
+import serpapi
+import cloudinary, cloudinary.uploader, cloudinary.api
+from cloudinary.uploader import upload  
+from collections import Counter
+config = cloudinary.config(secure=True)
+cloudinary.config( 
+  cloud_name = "dqzgegyxz",
+  api_key = "588341419325431", 
+  api_secret = "ETi9nfOxk8rfEkxHveWgzbyLfJg" 
+)
 load_dotenv()
+params = {
+    "engine": "google_lens",
+    "url": "https://res.cloudinary.com/dqzgegyxz/image/upload/v1711176880/iexxvto99aobdddd4tco.jpg",
+    "api_key": "0e6cd3cc461a2819f178f186423bf0949afc0d1ef7f80d5325434bf8ab105ee8"
+}
+# search = serpapi.search(params)
+# print(search)
 os.getenv("GOOGLE_API_KEY")
 genai.configure(api_key=os.getenv("GOOGLE_API_KEY"))
 
 app = Flask(__name__)
 CORS(app)
+
+def extract_subjects(visual_matches):
+    subjects = []
+    for match in visual_matches:
+        title = match.get('title', '')
+        subjects.append(title)  # Add all titles to list of potential subjects
+    return subjects
+
+@app.route('/uploadImg', methods=['POST'])
+def img_upload():
+    if 'image' not in request.files:
+        return jsonify({'error': 'No image provided'}), 400
+    file = request.files['image']
+    if file.filename == '':
+        return jsonify({'error': 'Empty file provided'}), 400
+    try:
+        # result = upload(file)
+        # image_url = result['secure_url']
+        # print("Uploaded Image URL:", image_url)
+        # params["url"] = image_url
+        search = serpapi.search(params)
+        
+        # Extract subjects from visual matches
+        visual_matches = search.get("visual_matches", [])
+        subjects = extract_subjects(visual_matches)
+        print(subjects)
+        
+        # Return the most likely subject
+        return jsonify({'message': "Data received"}), 200
+    except Exception as e:
+        return jsonify({'error': str(e)}), 500
 
 #decorator
 @app.route('/summarizeUrl', methods=['POST'])

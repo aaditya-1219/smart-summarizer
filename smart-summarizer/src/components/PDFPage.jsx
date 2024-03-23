@@ -58,7 +58,7 @@ const App = () => {
 	return (
 		<>
 			<div id="sidebar">
-				<i class="fa-solid fa-bars" onClick={expandSidebar}></i>
+				<i className="fa-solid fa-bars" onClick={expandSidebar}></i>
 				<div className="pdf-input displayNone">
 						<Dropzone onDrop={onDrop}>
 							{({ getRootProps, getInputProps }) => (
@@ -79,8 +79,8 @@ const App = () => {
 					<button onClick={uploadFile}>Upload PDF</button>
 				</div>
 				<div className="icons">
-					<i class="fa-regular fa-circle-question"></i>
-					<i class="fa-solid fa-gear"></i>
+					<i className="fa-regular fa-circle-question"></i>
+					<i className="fa-solid fa-gear"></i>
 				</div>
 			</div>
 			<div className="container">

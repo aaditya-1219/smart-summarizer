@@ -8,3 +8,8 @@ PyPDF2
 chromadb
 faiss-cpu
 langchain_google_genai
+goose3
+transformers
+torch
+serpapi
+cloudinary

@@ -6,6 +6,7 @@ import Home from "./components/Home";
 import PDFPage from "./components/PDFPage";
 import TextPage from "./components/TextPage";
 import URLPage from "./components/URLPage";
+import ImagePage from "./components/ImagePage";
 
 function App() {
 	const [url, setUrl] = useState("");
@@ -28,6 +29,7 @@ function App() {
 						<Route path="/urlpage" element={<URLPage />} />
 						<Route path="/pdfpage" element={<PDFPage />} />
 						<Route path="/textpage" element={<TextPage />} />
+						<Route path="/imagepage" element={<ImagePage />} />
 					</Routes>
 				</div>
 			</div>
