@@ -1,7 +1,7 @@
 from flask import Flask, request, jsonify
 from flask_cors import CORS
 from goose3 import Goose
-from transformers import pipeline 
+from transformers import pipeline
 from PyPDF2 import PdfReader
 from langchain.text_splitter import RecursiveCharacterTextSplitter
 import os
@@ -14,14 +14,19 @@ from langchain.prompts import PromptTemplate
 from dotenv import load_dotenv
 from transformers import AutoModelForQuestionAnswering, AutoTokenizer
 import serpapi
-import cloudinary, cloudinary.uploader, cloudinary.api
-from cloudinary.uploader import upload  
+import cloudinary
+import cloudinary.uploader
+import cloudinary.api
+from cloudinary.uploader import upload
 from collections import Counter
+from PIL import Image
+
+
 config = cloudinary.config(secure=True)
-cloudinary.config( 
-  cloud_name = "dqzgegyxz",
-  api_key = "588341419325431", 
-  api_secret = "ETi9nfOxk8rfEkxHveWgzbyLfJg" 
+cloudinary.config(
+    cloud_name="dqzgegyxz",
+    api_key="588341419325431",
+    api_secret="ETi9nfOxk8rfEkxHveWgzbyLfJg"
 )
 load_dotenv()
 params = {
@@ -37,12 +42,55 @@ genai.configure(api_key=os.getenv("GOOGLE_API_KEY"))
 app = Flask(__name__)
 CORS(app)
 
+
+def get_gemini_response(search):
+    prompt = str(search)
+    input_prompt = f"""
+    
+            {prompt}
+
+            You are provided with the JSON information generated from the google lens -->  and  i want information about it to give the information
+            do not give the JSON response only give response as per below template output i want 
+
+            "title --> 
+            desription -->
+            related image -->
+            product average price if (applicable) -->
+            main Source link -->
+            video Link if available -->
+            summary of the Data -->"
+            
+            give the output
+            
+"""
+    # print(input_prompt)
+    # input_prompt = """
+    
+    # you have given the JSON data filter out the useful data form it and give me in the template form like
+    # "title --> 
+    # desription -->
+    # related image -->
+    # product average price if (applicable) -->
+    # main Source link -->
+    # video Link if available -->
+    # summary of the Data -->"
+    
+    # """
+
+    print(input_prompt)
+    model = genai.GenerativeModel('gemini-pro')
+    response = model.generate_content([input_prompt])
+    # print(response)
+    return response.text
+
+
 def extract_subjects(visual_matches):
     subjects = []
     for match in visual_matches:
         title = match.get('title', '')
         subjects.append(title)  # Add all titles to list of potential subjects
     return subjects
+
 
 @app.route('/uploadImg', methods=['POST'])
 def img_upload():
@@ -52,35 +100,38 @@ def img_upload():
     if file.filename == '':
         return jsonify({'error': 'Empty file provided'}), 400
     try:
-        # result = upload(file)
-        # image_url = result['secure_url']
-        # print("Uploaded Image URL:", image_url)
-        # params["url"] = image_url
         search = serpapi.search(params)
+        print(search)
         
+        response = get_gemini_response(search)
+        print(response)
         # Extract subjects from visual matches
         visual_matches = search.get("visual_matches", [])
         subjects = extract_subjects(visual_matches)
-        print(subjects)
-        
+        # response = get_gemini_response(subjects)
+        # print(response)
+
         # Return the most likely subject
         return jsonify({'message': "Data received"}), 200
     except Exception as e:
         return jsonify({'error': str(e)}), 500
 
-#decorator
+# decorator
+
+
 @app.route('/summarizeUrl', methods=['POST'])
 def summarize_text():
     data = request.get_json()
     urlReceived = data['url']
 
-    # Logic starts here 
+    # Logic starts here
     summarizer = pipeline("summarization", model="facebook/bart-large-cnn")
     goose = Goose()
     # article = goose.extract(url='https://www.nationalgeographic.com/environment/article/global-warming-effects')
     article = goose.extract(url=urlReceived)
-    input_text = article.cleaned_text 
-    summary = summarizer(input_text, max_length=300, min_length=300, do_sample=False)
+    input_text = article.cleaned_text
+    summary = summarizer(input_text, max_length=300,
+                         min_length=300, do_sample=False)
     # print(summary[0]['summary_text'])
     goose.close()
     # pdf_docs =  get_pdf_text('file')
@@ -92,7 +143,7 @@ def summarize_text():
 
     get_vector_store(text_chunks)
     # return jsonify({'message': 'Processing completed'})
-    return jsonify({'summary': summary[0]['summary_text']}) 
+    return jsonify({'summary': summary[0]['summary_text']})
 
 
 def get_pdf_text(pdf_docs):
@@ -103,8 +154,10 @@ def get_pdf_text(pdf_docs):
             text += page.extract_text()
     return text
 
+
 def get_text_chunks(text):
-    text_splitter = RecursiveCharacterTextSplitter(chunk_size=10000, chunk_overlap=1000)
+    text_splitter = RecursiveCharacterTextSplitter(
+        chunk_size=10000, chunk_overlap=1000)
     chunks = text_splitter.split_text(text)
     return chunks
 
@@ -113,12 +166,13 @@ def get_text_chunks(text):
 #     vector_store = FAISS.from_texts(text_chunks, embedding=embeddings,allow_dangerous_deserialization=True)
 #     vector_store.save_local("faiss_index")
 
+
 def get_vector_store(text_chunks):
     embeddings = GoogleGenerativeAIEmbeddings(model="models/embedding-001")
-    vector_store = FAISS.from_texts(text_chunks, embedding=embeddings)  # Remove the insecure setting
+    # Remove the insecure setting
+    vector_store = FAISS.from_texts(text_chunks, embedding=embeddings)
     # vector_store = FAISS.from_texts(text_chunks, embedding=embeddings,allow_dangerous_deserialization=True)  # Remove the insecure setting
     vector_store.save_local("faiss_index")
-
 
 
 def get_conversational_chain():
@@ -131,17 +185,21 @@ def get_conversational_chain():
     Answer:
     """
     model = ChatGoogleGenerativeAI(model="gemini-pro", temperature=0.3)
-    prompt = PromptTemplate(template=prompt_template, input_variables=["context", "question"])
+    prompt = PromptTemplate(template=prompt_template,
+                            input_variables=["context", "question"])
     chain = load_qa_chain(model, chain_type="stuff", prompt=prompt)
     return chain
+
 
 def user_input(user_question):
     # Load GoogleGenerativeAIEmbeddings
     embeddings = GoogleGenerativeAIEmbeddings(model="models/embedding-001")
-    new_db = FAISS.load_local("faiss_index", embeddings,allow_dangerous_deserialization=True)
+    new_db = FAISS.load_local(
+        "faiss_index", embeddings, allow_dangerous_deserialization=True)
     docs = new_db.similarity_search(user_question)
     chain = get_conversational_chain()
-    response = chain.invoke({"input_documents": docs, "question": user_question}, return_only_outputs=True)
+    response = chain.invoke(
+        {"input_documents": docs, "question": user_question}, return_only_outputs=True)
     print(response)
     return response["output_text"]
 
@@ -165,14 +223,15 @@ def process_pdf():
         print(f"Error in process_pdf: {e}")
         return jsonify({'error': 'Internal Server Error'})
 
+
 @app.route('/chat', methods=['POST'])
 def chat_with_pdf():
     try:
         user_question = request.json['message']
-        print("User Question---->",user_question)
+        print("User Question---->", user_question)
         response = user_input(user_question)
-        
-        print("thesen is-->",response)
+
+        print("thesen is-->", response)
         return jsonify({'response': response})
     except Exception as e:
         print(f"Error in chat_with_pdf: {e}")
