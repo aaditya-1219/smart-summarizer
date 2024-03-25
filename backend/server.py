@@ -100,19 +100,24 @@ def img_upload():
     if file.filename == '':
         return jsonify({'error': 'Empty file provided'}), 400
     try:
+        result = upload(file)
+        image_url = result['secure_url']
+        print(image_url)
+        params['url'] = image_url
         search = serpapi.search(params)
-        print(search)
         
+        # Get response from Gemini
         response = get_gemini_response(search)
+        response = response.replace('*','')
         print(response)
         # Extract subjects from visual matches
-        visual_matches = search.get("visual_matches", [])
-        subjects = extract_subjects(visual_matches)
+        # visual_matches = search.get("visual_matches", [])
+        # subjects = extract_subjects(visual_matches)
         # response = get_gemini_response(subjects)
         # print(response)
 
         # Return the most likely subject
-        return jsonify({'message': "Data received"}), 200
+        return jsonify({'response': response}), 200
     except Exception as e:
         return jsonify({'error': str(e)}), 500
 
@@ -202,6 +207,18 @@ def user_input(user_question):
         {"input_documents": docs, "question": user_question}, return_only_outputs=True)
     print(response)
     return response["output_text"]
+
+
+@app.route('/processText', methods=['POST'])
+def process_text():
+    data = request.get_json()
+    usertext = data['text']
+    text_chunks = get_text_chunks(usertext)
+    get_vector_store(text_chunks)
+    summarizer = pipeline("summarization", model="facebook/bart-large-cnn")
+    summary = summarizer(usertext, max_length=300,
+                         min_length=300, do_sample=False)
+    return jsonify({'summary': summary[0]['summary_text']})
 
 
 @app.route('/process', methods=['POST'])

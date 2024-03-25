@@ -3,26 +3,32 @@ import axios from "axios";
 
 function ImagePage() {
 	const [image, setImage] = useState(null);
+	const [response, setResponse] = useState("");
 
-	// Function to handle file input change
 	const handleImageChange = (event) => {
 		setImage(event.target.files[0]);
+		event.target.value = ''
 	};
 
-	// Function to handle form submission
+	const expandSidebar = () => {
+		const sidebar = document.getElementById("sidebar");
+		const container = document.querySelector(".container");
+		const imgInput = document.querySelector(".img-input");
+		sidebar.classList.toggle("expandSidebar");
+		container.classList.toggle("increaseMargin");
+		imgInput.classList.toggle("displayNone");
+	};
+
 	const handleSubmit = async (event) => {
 		event.preventDefault();
-
-		// Create form data
 		const formData = new FormData();
 		formData.append("image", image);
-
-		// Send POST request to server
 		try {
 			const response = await axios.post(
 				"http://localhost:5000/uploadImg",
 				formData
 			);
+			setResponse(response.data.response);
 			console.log(response.data);
 		} catch (error) {
 			console.error("Error uploading image:", error.message);
@@ -31,20 +37,35 @@ function ImagePage() {
 	return (
 		<>
 			<div id="sidebar">
-				<i className="fa-solid fa-bars" ></i>
+				<i className="fa-solid fa-bars" onClick={expandSidebar}></i>
+				<div className="img-input displayNone">
+					<form
+						onSubmit={handleSubmit}
+						// style={{ marginLeft: "3.5rem" }}
+					>
+						<input
+							type="file"
+							accept="image/*"
+							onChange={handleImageChange}
+							className="displayNone"
+							id="imgInput"
+						/>
+						<label htmlFor="imgInput">Select file</label>
+						{image && <p style={{'color': 'white'}}>Selected Image: {image.name}</p>}
+						<button type="submit">Upload Image</button>
+					</form>
+				</div>
 				<div className="icons">
 					<i className="fa-regular fa-circle-question"></i>
 					<i className="fa-solid fa-gear"></i>
 				</div>
 			</div>
-			<form onSubmit={handleSubmit} style={{'marginLeft': '3.5rem'}}>
-				<input
-					type="file"
-					accept="image/*"
-					onChange={handleImageChange}
-				/>
-				<button type="submit">Upload Image</button>
-			</form>
+			<div className="container">
+				{/* <h2>Upload an image</h2> */}
+				{response && (<p className="pdf-answer">
+					{response}
+				</p>)}
+			</div>
 		</>
 	);
 }

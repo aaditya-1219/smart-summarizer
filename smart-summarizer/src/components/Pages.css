@@ -37,7 +37,8 @@ i {
     align-items: center;
     flex: 1;
     padding: 50px;
-    height: 100vh; 
+    /* height: 100vh;  */
+    max-height: 100%;
     margin-left: 3.5rem;
 }
 
@@ -74,7 +75,7 @@ i {
     opacity: 0;
 }
 
-.url-question, .pdf-input{
+.url-question, .pdf-input, .img-input {
     width: 100%;
     transition: 0.4s ease;
     margin: 0 10px;
@@ -97,13 +98,37 @@ i {
     width: 100%;
 }
 
+.img-input form {
+    border: 1px solid rgba(255, 255, 255, 0.46);
+    border-radius: 8px;
+    width: 100% !important;
+    display: flex;
+    flex-direction: column;
+    margin: 15px;
+    padding: 10px;
+    gap: 10px;
+}
+
+.img-input label {
+    background-color: rgba(255, 255, 255, 0.46);
+    width: fit-content;
+    color: white;
+    padding: 8px;
+    border-radius: 8px;
+    cursor: pointer;
+}
+
 input {
     width: 40vw;
     border-radius: 10px;
 }
 
+.container textarea {
+    width: 80vw !important;
+}
+
 textarea {
-    /* width: 40vw; */
+    width: 40vw;
     border-radius: 5px;
 }
 
@@ -113,11 +138,16 @@ input, textarea {
     padding: 5px 8px;
 }
 
+.top-margin {
+    margin: 10px 0;
+}
+
 .sendIcon {
     transform: scale(0.5);
     height: fit-content;
 }
-.submitBtn {
+.container .submitBtn {
+    color: black;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -176,6 +206,7 @@ input, textarea {
     border-radius: 8px;
     border: 1px solid rgba(0,0,0,0.2);
     padding: 20px;
+    white-space: pre-line;
 }
 
 .pdf-container {

@@ -43,6 +43,12 @@ function Home() {
 								<i className="fa-solid fa-font"></i>
 							</div>
 						</Link>
+						<Link to="/imagepage">
+							<div className="route-box">
+								Upload Image	
+								<i class="fa-solid fa-image"></i>
+							</div>
+						</Link>
 					</div>
 				</div>
 			</div>

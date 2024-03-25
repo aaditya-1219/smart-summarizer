@@ -9,11 +9,15 @@ body {
 }
 
 .box-container {
+    flex-direction: column;
     display: flex;
     justify-content: center;
     align-items: center;
     width: 100vw;
     height: 100vh;
+    background-color: var(--bg);
+    width: fit-content;
+    gap: 20px;
 }
 
 .route-box {
@@ -23,9 +27,8 @@ body {
     background-color: var(--darkblue);
     font-size: 1.5rem;
     padding: 20px;
-    margin: 20px;
-    height: 20vw;
-    width: 20vw;
+    height: 30vh;
+    width: 22vw;
     border-radius: 24px;
     box-shadow: 10px 10px 4px 0px rgba(0,0,0,0.1);
     transition: 0.3s all;
@@ -45,17 +48,10 @@ body {
 a {
     text-decoration: none;
 }
-.box-container {
-    background-color: var(--bg);
-    display: flex;
-    flex-direction: column;
-    width: fit-content;
-    gap: 20px;
-}
 .box-wrapper {
     gap: 20px;
-    display: flex;
-    flex-direction: row;
+    display: grid;
+    grid-template-columns: repeat(2, auto);
 }
 .home-container h1 {
     position: absolute;
@@ -65,19 +61,17 @@ a {
     padding: 10px 20px;
 }
 .home-container {
-    width: 100%;
+    height: 100vh;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
     padding: 0 40px;
-    height: 100vh;
 }
 .greetings {
     width: 100%;
     text-align: left;
 }
-
 
 .route-box i {
     transform: scale(1);

@@ -86,21 +86,6 @@ const App = () => {
 			<div className="container">
 				{/* <h1>PDF Chat App</h1> */}
 				<div className="wrapper">
-					{/* <div className="pdf-input">
-						<Dropzone onDrop={onDrop}>
-							{({ getRootProps, getInputProps }) => (
-								<div {...getRootProps()} style={dropzoneStyle}>
-									<input {...getInputProps()} />
-									<p>
-										Drag & drop a PDF file here, or click to
-										select one
-									</p>
-								</div>
-							)}
-						</Dropzone>
-						{file && <p>Selected File: {file.name}</p>}
-						<button onClick={uploadFile}>Upload PDF</button>
-					</div> */}
 					<div className="input-wrapper">
 						<input
 							placeholder="Write your query here..."
