@@ -1,6 +1,8 @@
 import React, { useState } from "react";
 import axios from "axios";
 import Dropzone from "react-dropzone";
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const App = () => {
 	const [file, setFile] = useState(null);
@@ -25,6 +27,7 @@ const App = () => {
 					},
 				}
 			);
+			toast.success("PDF uploaded!")
 
 			// Handle the response from the Flask backend
 			console.log(response.data);
@@ -57,6 +60,7 @@ const App = () => {
 
 	return (
 		<>
+			<ToastContainer position="bottom-right" hideProgressBar={true} autoClose={2500}/>
 			<div id="sidebar">
 				<i className="fa-solid fa-bars" onClick={expandSidebar}></i>
 				<div className="pdf-input displayNone">
@@ -111,8 +115,8 @@ const App = () => {
 					</div>
 				</div>
 				{response && (
-					<p className="pdf-answer">
-						Response from Gemini AI: {response}
+					<p className="pdf-answer m-top">
+						{response}
 					</p>
 				)}
 			</div>

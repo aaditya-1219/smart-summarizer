@@ -1,0 +1,5 @@
+backend/faiss_index/
+backend/node_modules/
+backend/venv/
+backend/.env
+smart-summarizer/node_modules/

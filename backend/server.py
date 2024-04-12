@@ -31,9 +31,11 @@ cloudinary.config(
 load_dotenv()
 params = {
     "engine": "google_lens",
-    "url": "https://res.cloudinary.com/dqzgegyxz/image/upload/v1711176880/iexxvto99aobdddd4tco.jpg",
+    "url": "",
+    # "url": "https://res.cloudinary.com/dqzgegyxz/image/upload/v1711176880/iexxvto99aobdddd4tco.jpg",
     "api_key": "0e6cd3cc461a2819f178f186423bf0949afc0d1ef7f80d5325434bf8ab105ee8"
 }
+imageInfo = ""
 # search = serpapi.search(params)
 # print(search)
 os.getenv("GOOGLE_API_KEY")
@@ -43,8 +45,8 @@ app = Flask(__name__)
 CORS(app)
 
 
-def get_gemini_response(search):
-    prompt = str(search)
+def get_gemini_response(jsonInfo):
+    prompt = str(jsonInfo)
     input_prompt = f"""
     
             {prompt}
@@ -91,6 +93,30 @@ def extract_subjects(visual_matches):
         subjects.append(title)  # Add all titles to list of potential subjects
     return subjects
 
+@app.route('/imgQuery', methods=['POST'])
+def img_query():
+    if(params['url']==''):
+        return jsonify({'response': "Please upload an image first"}), 200
+    data = request.get_json()
+    userQuery = data['query']
+    imageData = serpapi.search(params)
+    # print(imageData)
+    input_prompt = f"""
+    
+            {imageData}
+            Based on this JSON data, answer the given query:
+            {userQuery}
+
+            give the output
+            
+"""
+    print(input_prompt)
+    model = genai.GenerativeModel('gemini-pro')
+    response = model.generate_content([input_prompt])
+    print(response.text)
+    # return response.text
+    return jsonify({'response': response.text}), 200
+
 
 @app.route('/uploadImg', methods=['POST'])
 def img_upload():
@@ -104,12 +130,12 @@ def img_upload():
         image_url = result['secure_url']
         print(image_url)
         params['url'] = image_url
-        search = serpapi.search(params)
+        # imageInfo = serpapi.search(params)
         
         # Get response from Gemini
-        response = get_gemini_response(search)
-        response = response.replace('*','')
-        print(response)
+        # response = get_gemini_response(imageInfo)
+        # response = response.replace('*','')
+        # print(response)
         # Extract subjects from visual matches
         # visual_matches = search.get("visual_matches", [])
         # subjects = extract_subjects(visual_matches)
@@ -117,7 +143,8 @@ def img_upload():
         # print(response)
 
         # Return the most likely subject
-        return jsonify({'response': response}), 200
+        return jsonify({'response': 'Image uploaded'}), 200
+        # return jsonify({'response': response}), 200
     except Exception as e:
         return jsonify({'error': str(e)}), 500
 
