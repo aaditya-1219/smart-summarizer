@@ -7,22 +7,23 @@ import PDFPage from "./components/PDFPage";
 import TextPage from "./components/TextPage";
 import URLPage from "./components/URLPage";
 import ImagePage from "./components/ImagePage";
+import Navbar from "./components/Navbar";
 
 function App() {
-	const [url, setUrl] = useState("");
-	const sendData = async () => {
-		try {
-			axios
-				.post("http://localhost:5000/api/endpoint", { url })
-				.then((response) => console.log(response.data));
-		} catch (error) {
-			console.log("Error sending request");
-		}
-	};
+	// const [url, setUrl] = useState("");
+	// const sendData = async () => {
+	// 	try {
+	// 		axios
+	// 			.post("http://localhost:5000/api/endpoint", { url })
+	// 			.then((response) => console.log(response.data));
+	// 	} catch (error) {
+	// 		console.log("Error sending request");
+	// 	}
+	// };
 	return (
 		<>
 			<div className="main-container">
-				{/* <Sidebar /> */}
+				<Navbar />
 				<div className="main-content">
 					<Routes>
 						<Route path="/" element={<Home />} />

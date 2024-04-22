@@ -5,7 +5,8 @@ import "react-toastify/dist/ReactToastify.css";
 
 function ImagePage() {
 	const [image, setImage] = useState(null);
-	const [response, setResponse] = useState("");
+	const [answer, setAnswer] = useState("");
+	const [imageInfo, setImageInfo] = useState("");
 	const [userQuery, setUserQuery] = useState("");
 
 	const handleImageChange = (event) => {
@@ -32,8 +33,7 @@ function ImagePage() {
 				formData
 			);
 			toast.success("Image uploaded!");
-			// setResponse(response.data.response);
-			console.log(response.data);
+			setImageInfo(response.data.response)
 		} catch (error) {
 			console.error("Error uploading image:", error.message);
 		}
@@ -41,11 +41,11 @@ function ImagePage() {
 
 	const postQuery = async () => {
 		try {
-			const response = await axios.post(
+			const answer = await axios.post(
 				"http://localhost:5000/imgQuery",
 				{ query: userQuery }
 			);
-			setResponse(response.data.response);
+			setAnswer(answer.data.response);
 		} catch (error) {
 			console.log("Error occurred: ", error);
 		}
@@ -109,7 +109,8 @@ function ImagePage() {
 						</div>
 					</button>
 				</div>
-				{response && <p className="pdf-answer m-top">{response}</p>}
+				{imageInfo && <p className="url-answer">{imageInfo}</p>}
+				{answer && <p className="url-answer">{answer}</p>}
 			</div>
 		</>
 	);

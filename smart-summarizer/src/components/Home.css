@@ -1,9 +1,3 @@
-:root {
-    --grey-bg: #F0ECE5;
-    --box-color: #808080;
-    --darkblue: #31304D;
-}
-
 body {
     background-color: var(--grey-bg);
 }
@@ -61,12 +55,12 @@ a {
     padding: 10px 20px;
 }
 .home-container {
-    height: 100vh;
+    height: 100%;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    padding: 0 40px;
+    /* padding: 0 40px; */
 }
 .greetings {
     width: 100%;

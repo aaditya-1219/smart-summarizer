@@ -130,12 +130,12 @@ def img_upload():
         image_url = result['secure_url']
         print(image_url)
         params['url'] = image_url
-        # imageInfo = serpapi.search(params)
+        imageInfo = serpapi.search(params)
         
         # Get response from Gemini
-        # response = get_gemini_response(imageInfo)
-        # response = response.replace('*','')
-        # print(response)
+        response = get_gemini_response(imageInfo)
+        response = response.replace('*','')
+        print(response)
         # Extract subjects from visual matches
         # visual_matches = search.get("visual_matches", [])
         # subjects = extract_subjects(visual_matches)
@@ -143,8 +143,8 @@ def img_upload():
         # print(response)
 
         # Return the most likely subject
-        return jsonify({'response': 'Image uploaded'}), 200
-        # return jsonify({'response': response}), 200
+        # return jsonify({'response': 'Image uploaded'}), 200
+        return jsonify({'response': response}), 200
     except Exception as e:
         return jsonify({'error': str(e)}), 500
 

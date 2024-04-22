@@ -84,9 +84,9 @@ function Home() {
 			</div>
 			<div className="container">
 				{/* <h1>URL Summarizer</h1> */}
-				<p>
+				{/* <p>
 					https://www.nationalgeographic.com/environment/article/global-warming-effects
-				</p>
+				</p> */}
 				<div className="wrapper">
 					<div className="input-wrapper">
 						<input
