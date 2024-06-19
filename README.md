@@ -5,6 +5,11 @@ Title: Smart Artificial Summarizer
 
 Link: https://smart-summarizer-bot.netlify.app/
 
+## Team Who developed
+1) Shailendra Mahadule
+2) Aaditya Patil
+3) Rakesh Dharne
+
 Description:
 
 This project provides a user-friendly interface for summarizing articles, PDFs, and extracting information from images. It leverages powerful APIs to deliver insightful summaries and answer questions related to the content.
