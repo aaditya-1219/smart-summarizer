@@ -10,6 +10,9 @@ Link: https://smart-summarizer-bot.netlify.app/
 2) Aaditya Patil
 3) Rakesh Dharne
 
+### Figma design
+https://www.figma.com/design/atTSz4Fb0KnBTa3vF5hRXJ/Text-summarizer?node-id=0-1
+
 Description:
 
 This project provides a user-friendly interface for summarizing articles, PDFs, and extracting information from images. It leverages powerful APIs to deliver insightful summaries and answer questions related to the content.
